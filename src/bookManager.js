@@ -30,14 +30,16 @@ async function addNewBook (req, res) {
 }
 
 function bookInfo_isValid(info){
-  const {book_id} = info;
+  const {book_id, title, author, pubYear} = info;
   if(myBooks.length === 0){
     return true;
   }
 
   const uniqueId = (myBooks.find((book) => book.book_id === book_id) === undefined);
   return uniqueId;
-    
+
+  // Implement validation for remaining properties. 
+  // Return true if all properties are valid. False otherwise. 
 }
 
 
