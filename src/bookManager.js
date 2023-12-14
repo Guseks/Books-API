@@ -1,11 +1,9 @@
 const Book = require("./book");
-// Module responsible for handling collection of books. 
-
-// Implement functions to handle CRUD Operations
 
 //My Collection of Books
 const myBooks = [];
 
+//Populate collection with books for testing
 myBooks.push(new Book("1", "A", "Gustaf", "2008"));
 
 function getAllBooks(){
