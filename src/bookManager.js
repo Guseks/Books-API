@@ -25,7 +25,6 @@ function getBook(req, res){
 
  function deleteBookById(req, res){
   const book_id = req.params.id;
-  //const index = myBooks.findIndex(book => book.book_id === book_id);
   let modified = false;
   myBooks = myBooks.filter(book => {
     const found = book.book_id !== book_id;
@@ -35,11 +34,32 @@ function getBook(req, res){
   });
   
   if(modified){
-    //myBooks = [...myBooks.slice(0, index), ...myBooks.slice(index+1, myBooks.length)];
     res.status(200).json({message: `Book with id ${book_id} deleted`});
   }
   res.status(400).json({message: `Book with id ${book_id} not found, try again!`});
  } 
+
+function updateBookById(req, res) {
+  const book_id = req.params.id;
+  const {title, author, pubYear} = req.body;
+  let updated = false;
+  myBooks.forEach(book => {
+    if(book.book_id === book_id){
+      book.title = title || book.title;
+      book.author = author || book.author;
+      book.pubYear = pubYear || book.pubYear;
+      updated = true;
+    }
+  });
+
+  if(updated){
+    res.status(200).json({message: "Book updated"});
+  }
+  else {
+    res.status(400).json({message: "Desired book to update not found!"});
+  }
+  
+}
 
 async function addNewBook (req, res) {
   try {
@@ -108,4 +128,4 @@ async function bookInfo_isValid(info){
 }
 
 
-module.exports = {getAllBooks, addNewBook, getBook, deleteBookById};
+module.exports = {getAllBooks, addNewBook, getBook, deleteBookById, updateBookById};

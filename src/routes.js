@@ -1,5 +1,5 @@
 const express = require("express");
-const {getAllBooks, addNewBook, getBook, deleteBookById} = require("./bookManager");
+const {getAllBooks, addNewBook, getBook, deleteBookById, updateBookById} = require("./bookManager");
 const router = express.Router();
 
 
@@ -38,6 +38,17 @@ router.get("/books/:id", async (req, res) => {
 router.delete("/books/:id", (req, res)=> {
   try {
     deleteBookById(req,res);
+  }
+  catch (error){
+    console.error(error);
+    res.status(500).json({message: "Internal server error"});
+  }
+  
+});
+
+router.put("/books/:id", (req, res)=>{
+  try {
+    updateBookById(req, res);
   }
   catch (error){
     console.error(error);
