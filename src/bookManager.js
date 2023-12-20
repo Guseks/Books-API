@@ -11,6 +11,20 @@ function getAllBooks(){
   return myBooks;
 }
 
+function getBook(req, res){
+  const book_id = req.params.id;
+  const index = myBooks.findIndex(book => book.book_id === book_id);
+  if(index !== -1){
+    res.status(200).json({message: "Book Found", Book: myBooks[index]});
+  }
+  else {
+    res.status(400).json({message: `Book with id ${book_id} not found, try again!`});
+  }
+ 
+}
+
+  
+
 async function addNewBook (req, res) {
   try {
     const bookInfo = req.body;
@@ -78,4 +92,4 @@ async function bookInfo_isValid(info){
 }
 
 
-module.exports = {getAllBooks, addNewBook};
+module.exports = {getAllBooks, addNewBook, getBook};
