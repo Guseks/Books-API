@@ -23,7 +23,15 @@ function getBook(req, res){
  
 }
 
-  
+ function deleteBookById(req, res){
+  const book_id = req.params.id;
+  const index = myBooks.findIndex(book => book.book_id === book_id);
+  if(index !== -1){
+    myBooks.splice(index, 1);
+    res.status(200).json({message: `Book with id ${book_id} deleted`});
+  }
+  res.status(400).json({message: `Book with id ${book_id} not found, try again!`});
+ } 
 
 async function addNewBook (req, res) {
   try {
@@ -92,4 +100,4 @@ async function bookInfo_isValid(info){
 }
 
 
-module.exports = {getAllBooks, addNewBook, getBook};
+module.exports = {getAllBooks, addNewBook, getBook, deleteBookById};
