@@ -43,14 +43,18 @@ function updateBookById(req, res) {
   const book_id = req.params.id;
   const {title, author, pubYear} = req.body;
   let updated = false;
-  myBooks.forEach(book => {
-    if(book.book_id === book_id){
-      book.title = title || book.title;
-      book.author = author || book.author;
-      book.pubYear = pubYear || book.pubYear;
-      updated = true;
-    }
-  });
+ myBooks = myBooks.map(book => {
+  if(book.book_id === book_id){
+    updated = true;
+    return {
+      ...book,
+      title: title || book.title,
+      author: author || book.author,
+      pubYear: pubYear || book.pubYear
+    };
+  }
+  return book
+ });
 
   if(updated){
     res.status(200).json({message: "Book updated"});
