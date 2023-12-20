@@ -2,7 +2,7 @@ const Book = require("./book");
 const Joi = require("joi");
 
 //My Collection of Books
-const myBooks = [];
+let myBooks = [];
 
 //Populate collection with books for testing
 myBooks.push(new Book("1", "A", "Gustaf", "2008"));
@@ -25,9 +25,17 @@ function getBook(req, res){
 
  function deleteBookById(req, res){
   const book_id = req.params.id;
-  const index = myBooks.findIndex(book => book.book_id === book_id);
-  if(index !== -1){
-    myBooks.splice(index, 1);
+  //const index = myBooks.findIndex(book => book.book_id === book_id);
+  let modified = false;
+  myBooks = myBooks.filter(book => {
+    const found = book.book_id !== book_id;
+    if(found) modified = true;
+    return found;
+    
+  });
+  
+  if(modified){
+    //myBooks = [...myBooks.slice(0, index), ...myBooks.slice(index+1, myBooks.length)];
     res.status(200).json({message: `Book with id ${book_id} deleted`});
   }
   res.status(400).json({message: `Book with id ${book_id} not found, try again!`});
